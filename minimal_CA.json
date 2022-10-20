@@ -1,8 +1,8 @@
 {
   "gym_monitor_outdir": "./tmp/random-agent-results",
   "env": {
-    "name": "CartPole-v1",
-    "observation_dim": 4
+    "name": "myenv-v0",
+    "observation_dim": 1
   },
   "visual": {
     "model": "SimpleAE",
@@ -12,13 +12,13 @@
       "use_bias": true,
       "encoder_nonlinearity": "leaky_relu",
       "decoder_nonlinearity": "sigmoid",
-      "num_units": 4,
+      "num_units": 1,
       "input_dropout": 0.5,
       "hidden_dropout": 0.5
     }
   },
-  "motor_obs_dim": 4,
-  "motor_n_action": 2,
+  "motor_obs_dim": 1,
+  "motor_n_action": 4,
   "sleep": 0.02,
   "rl_agent": {
     "agent": "ppo",
@@ -27,7 +27,7 @@
     "memory": "minimum",
     "batch_size": 12,
     "update_frequency": 1,
-    "learning_rate": 0.001813150053725916,
+    "learning_rate": 0.01813150053725916,
     "multi_step": 5,
     "subsampling_fraction": 0.9131375430837279,
     "likelihood_ratio_clipping": 0.09955676846552193,
@@ -36,7 +36,7 @@
     "baseline": { "type": "auto", "rnn": false },
     "baseline_optimizer": {
       "optimizer": "adam",
-      "learning_rate": 0.003670157218888348,
+      "learning_rate": 0.03670157218888348,
       "multi_step": 10
     },
     "state_preprocessing": "linear_normalization",

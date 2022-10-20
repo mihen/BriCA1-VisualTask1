@@ -1,0 +1,7 @@
+__pycache__/
+
+runs/
+
+tmp/
+
+dump.txt

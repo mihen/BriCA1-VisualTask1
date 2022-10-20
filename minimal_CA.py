@@ -21,6 +21,8 @@ from tensorforce.environments import Environment
 from torch.utils.tensorboard import SummaryWriter
 from torchvision import datasets, transforms
 
+import myenv  # do not delete this line. This module is indirectory refered by gym.make.
+
 
 class VisualComponent(brica1.Component):
     def __init__(self):
@@ -61,7 +63,7 @@ class MotorComponent(brica1.Component):
             self.state_space = dict(type='float', shape=(obs_dim,))
             self.action_space = dict(type='int', num_values=n_action)
             self.state = np.random.random(size=(obs_dim,))
-            self. reward = 0.0
+            self.reward = 0.0
             self.done = False
             self.info = {}
             self.parent = parent
@@ -141,7 +143,7 @@ class MotorComponent(brica1.Component):
         self.inputs['token_in'] = np.array([0])
         self.results['token_out'] = np.array([0])
         self.out_ports['token_out'].buffer = np.array([0])
-
+    
 class CognitiveArchitecture(brica1.Module):
     def __init__(self, observation_dim, motor_obs_dim, n_action, rl, train, modelp):
         super(CognitiveArchitecture, self).__init__()
@@ -234,9 +236,10 @@ if __name__ == '__main__':
     agent = brica1.brica_gym.GymAgent(model, env)
     scheduler = brica1.VirtualTimeSyncScheduler(agent)
     
+    last_token = 0
+
     for i in range( train["episode_count"]):
         reward_sum = 0.
-        last_token = 0
         for j in range(train["max_steps"]):
             scheduler.step()
             model.visual.inputs['token_in'] = model.get_out_port('token_out').buffer
@@ -257,8 +260,9 @@ if __name__ == '__main__':
                 model.motor.reset()
                 model.visual.results['token_out'] = np.array([0])
                 model.visual.out_ports['token_out'].buffer = np.array([0])
+                last_token = current_token = 0
                 break
-        print(i, "Avr. reward: ", reward_sum/env.spec.max_episode_steps)
+        print(i, "Avr. reward: ", reward_sum)
 
     print("Close")
     if observation_dump is not None:
