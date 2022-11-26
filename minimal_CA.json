@@ -2,12 +2,16 @@
   "gym_monitor_outdir": "./tmp/random-agent-results",
   "env": {
     "name": "myenv-v0",
-    "observation_dim": 1
+    "observation_dim": 49154,
+    "action_dim": 2,
+    "token_dim": 1
   },
-  "visual": {
-    "model": "SimpleAE",
+  "retina": {
+    "no_cuda": true,
     "batch_size": 5,
     "learning_rate": 0.005,
+    "model_name": "SimpleAE",
+    "model_file": "saved_model.pt",
     "model_config": {
       "use_bias": true,
       "encoder_nonlinearity": "leaky_relu",
