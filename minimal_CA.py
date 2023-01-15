@@ -65,7 +65,7 @@ if __name__ == '__main__':
     if args.mode == "1":   # random act
         model = CognitiveArchitecture(False, train, False, config=config)
     elif args.mode == "2": # act by reinforcement learning
-        train['rl_agent']=config['rl_agent']
+        train['rl_agent']=config['fef']['rl_agent']
         modelp = args.model is not None
         model = CognitiveArchitecture(True, train, modelp, config=config)
     agent = brica1.brica_gym.GymAgent(model, env)
