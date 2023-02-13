@@ -12,6 +12,7 @@ import numpy as np
 from gym import wrappers
 from oculoenv import Environment as OculoEnvironment
 from oculoenv import PointToTargetContent
+from torch.utils.tensorboard import SummaryWriter
 
 import myenv  # do not delete this line. This module is indirectory refered by gym.make.
 from modules.CognitiveArchitecture import CognitiveArchitecture
@@ -41,6 +42,7 @@ if __name__ == '__main__':
     # ロガー設定
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
+    writer = SummaryWriter()
 
     # 引数にDumpが指定されている場合は、そこに出力するよう設定
     if args.dump is not None:
@@ -53,7 +55,7 @@ if __name__ == '__main__':
         observation_dump = None
     
     # OculoEnvのEnvironmentの設定（タスク定義はOculoEnv側に定義し、それをここで指定する。その他設定もConfigから読み込み、ここで設定）
-    content = PointToTargetContent()
+    content = PointToTargetContent(difficulty=0)
     env = OculoEnvironment(content)
     outdir = config['gym_monitor_outdir']
     env = wrappers.Monitor(env, outdir, force=True)
@@ -81,9 +83,11 @@ if __name__ == '__main__':
             time.sleep(config["sleep"])
             current_token = agent.get_out_port('token_out').buffer[0]
             if last_token + 1 == current_token:
-                reward_sum += agent.get_in_port("reward").buffer[0]
+                new_rew = agent.get_in_port("reward").buffer[0]
+                reward_sum += new_rew
                 last_token = current_token
                 env.render()
+                writer.add_scalar('s_reward', new_rew, i * 10000 + j)
                 if observation_dump is not None:
                      observation_dump.write(str(agent.get_in_port("observation").buffer.tolist()) + '\n')
             if agent.env.done:
@@ -98,6 +102,7 @@ if __name__ == '__main__':
                 last_token = current_token = 0
                 break
         print(i, "Avr. reward: ", reward_sum)
+        writer.add_scalar('t_reward', reward_sum, i)
 
     print("Close")
     if observation_dump is not None:

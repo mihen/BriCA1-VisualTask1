@@ -1,6 +1,6 @@
 {
   "gym_monitor_outdir": "./tmp/random-agent-results",
-  "sleep": 0.02,
+  "sleep": 0.005,
   "env": {
     "name": "myenv-v0",
     "observation_dim": 49154,
@@ -11,7 +11,7 @@
   "lip": {
     "no_cuda": true,
     "batch_size": 5,
-    "learning_rate": 0.005,
+    "learning_rate": 0.01,
     "model_name": "SimpleAE",
     "model_file": "saved_model.pt",
     "model_config": {

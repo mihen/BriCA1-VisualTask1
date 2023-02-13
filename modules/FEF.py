@@ -10,7 +10,7 @@ class FEF(brica1.Component):
     class MotorEnv(Environment):
         def __init__(self, parent, obs_dim=1, action_dim=1, config=None):
             super(Environment, self).__init__()
-            self.action_space = dict(type='float', shape=(action_dim,), min_value=-np.pi/10, max_value=np.pi/10)
+            self.action_space = dict(type='float', shape=(action_dim,), min_value=-np.pi/15, max_value=np.pi/15)
             self.state_space = dict(type='float', shape=(config["rl_state_dim"],))
             self.state = np.zeros(config["rl_state_dim"], dtype='float64')
             self.reward = 0.0

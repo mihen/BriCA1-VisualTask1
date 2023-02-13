@@ -30,7 +30,7 @@ class LIP(brica1.PipeComponent):
         (image, angle_h, angle_v) = get_angles_and_image(in_data)
 
         # サリエンシーマップに変換
-        saliency = cv2.saliency.StaticSaliencySpectralResidual_create()
+        saliency = cv2.saliency.StaticSaliencyFineGrained_create()
         bool, map = saliency.computeSaliency(image.astype(np.float32))
         i_saliency = (map * 255).astype("uint8")
         render_image_for_debug(i_saliency, "LIP")
