@@ -14,7 +14,6 @@ from oculoenv import Environment as OculoEnvironment
 from oculoenv import PointToTargetContent
 from torch.utils.tensorboard import SummaryWriter
 
-import myenv  # do not delete this line. This module is indirectory refered by gym.make.
 from modules.CognitiveArchitecture import CognitiveArchitecture
 
 if __name__ == '__main__':
@@ -55,7 +54,7 @@ if __name__ == '__main__':
         observation_dump = None
     
     # OculoEnvのEnvironmentの設定（タスク定義はOculoEnv側に定義し、それをここで指定する。その他設定もConfigから読み込み、ここで設定）
-    content = PointToTargetContent(difficulty=0)
+    content = PointToTargetContent(difficulty=3)
     env = OculoEnvironment(content)
     outdir = config['gym_monitor_outdir']
     env = wrappers.Monitor(env, outdir, force=True)
@@ -70,7 +69,7 @@ if __name__ == '__main__':
         train['rl_agent']=config['fef']['rl_agent']
         modelp = args.model is not None
         model = CognitiveArchitecture(True, train, modelp, config=config)
-    agent = brica1.brica_gym.GymAgent(model, env)
+    agent = brica1.brica_gym.GymAgent(model, env, config['env']['observation_dim'], config['env']['action_dim'])
     scheduler = brica1.VirtualTimeSyncScheduler(agent)
     
     # 学習のイテレーションを回す処理

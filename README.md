@@ -32,7 +32,7 @@ For the details, please read [this article](https://rondelionai.blogspot.com/202
 
 ```
 $ python minimal_CA.py 2 --config minimal_CA.json --episode_count 250 --max_steps 1500 --dump dump.txt
-python minimal_CA.py 2 --config minimal_CA.json --episode_count 100 --max_steps 500 --dump dump.txt
+python minimal_CA.py 2 --config minimal_CA.json --episode_count 10 --max_steps 100 --dump dump.txt
 
 ```
 
