@@ -55,7 +55,7 @@ if __name__ == '__main__':
     
     # OculoEnvのEnvironmentの設定（タスク定義はOculoEnv側に定義し、それをここで指定する。その他設定もConfigから読み込み、ここで設定）
     content = PointToTargetContent(difficulty=3)
-    env = OculoEnvironment(content)
+    env = OculoEnvironment(content, usebrica1=True)
     outdir = config['gym_monitor_outdir']
     env = wrappers.Monitor(env, outdir, force=True)
     train={}
